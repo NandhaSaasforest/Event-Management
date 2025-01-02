@@ -12,6 +12,7 @@ class RegisteredEvent extends Model
     protected $fillable = [
         'user_id',
         'event_id',
+        'paid_amount'
     ];
 
     public function user()

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RegisteredEventsResource\Pages;
 use App\Filament\Resources\RegisteredEventsResource\RelationManagers;
+use App\Models\Event;
 use App\Models\RegisteredEvent;
 use App\Models\RegisteredEvents;
 use Closure;
@@ -45,7 +46,20 @@ class RegisteredEventsResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('event_id')
                     ->required()
-                    ->relationship('events', 'event_name'),
+                    ->reactive()
+                    ->relationship('events', 'event_name')
+                    ->afterStateUpdated(function (?string $state, ?string $old, callable $set) {
+                        if ($state) {
+                            $event = Event::find($state);
+                            if ($event) {
+                                $set('paid_amount', $event->cost);
+                            }
+                        }
+                    }),
+                Forms\Components\TextInput::make('paid_amount')
+                    ->label('Event Cost')
+                    ->readOnly(),
+
             ]);
     }
 
@@ -58,6 +72,10 @@ class RegisteredEventsResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('events.event_name')
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('paid_amount')
+                    ->numeric()
+                    ->prefix('$')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

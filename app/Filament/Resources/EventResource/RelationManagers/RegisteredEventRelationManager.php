@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\EventResource\RelationManagers;
 
+use App\Models\Event;
+use App\Models\RegisteredEvent;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -30,6 +32,17 @@ class RegisteredEventRelationManager extends RelationManager
 
         return $table
             ->recordTitleAttribute('registeredEvents')
+            ->header(function(){
+                $users = $this->getOwnerRecord()->registeredEvents()->count();
+                $revenue =  $this->getOwnerRecord()->registeredEvents()->sum('paid_amount');
+
+                return new HtmlString("
+                <div class='flex items-center justify-between p-4 bg-gray-100 rounded'>
+                <span class='text-sm text-gray-600'>Total Registration: {$users}</span>
+                <span class='text-sm text-gray-600'>Revenue: {$revenue}</span>
+                </div>"
+            );
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     // ->relationship('user', 'name')

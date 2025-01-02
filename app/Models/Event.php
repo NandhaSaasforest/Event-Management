@@ -22,4 +22,9 @@ class Event extends Model
     {
         return $this->hasMany(RegisteredEvent::class);
     }
+
+    public function revenue()
+    {
+        return $this->hasMany(Revenue::class, 'attendance_id');
+    }
 }

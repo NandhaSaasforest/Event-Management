@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registered_events', function (Blueprint $table) {
+        Schema::create('revenues', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('event_id')->references('id')->on('events')->onDelete('cascade');
-            $table->integer('paid_amount');
+            // $table->foreignId('event_id')->references('event_id')->on('events')->onDelete('cascade');
+            // $table->integer('total_revenue');
+            // $table->integer('total_registration');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('registered_events');
+        Schema::dropIfExists('revenues');
     }
 };
