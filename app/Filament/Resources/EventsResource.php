@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\EventResource\RelationManagers\RegisteredEventRelationManager;
 use App\Filament\Resources\EventsResource\Pages;
 use App\Filament\Resources\EventsResource\RelationManagers;
 use App\Models\Event;
@@ -89,7 +90,7 @@ class EventsResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RegisteredEventRelationManager::class
         ];
     }
 
