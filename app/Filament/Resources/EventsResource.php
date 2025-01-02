@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventsResource\Pages;
 use App\Filament\Resources\EventsResource\RelationManagers;
+use App\Models\Event;
 use App\Models\Events;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -16,7 +17,7 @@ use Illuminate\Support\HtmlString;
 
 class EventsResource extends Resource
 {
-    protected static ?string $model = Events::class;
+    protected static ?string $model = Event::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -44,7 +45,7 @@ class EventsResource extends Resource
     {
         return $table
             ->header(function () {
-                $recordCount = Events::count(); // Query the model to get the total count
+                $recordCount = Event::count(); // Query the model to get the total count
 
                 return new HtmlString("
                 <div class='flex items-center justify-between p-4 bg-gray-100 rounded'>
